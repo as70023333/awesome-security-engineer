@@ -468,7 +468,7 @@ For issues, questions, or contributions:
 
 - **Issues**: [GitHub Issues](https://github.com/as70023333/awesome-security-engineer/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/as70023333/awesome-security-engineer/discussions)
-- **Email**: security-team@company.com
+
 
 ---
 
