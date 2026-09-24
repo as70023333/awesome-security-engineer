@@ -19,7 +19,7 @@ Focusing on Cloud Security Architecture, Infrastructure-as-Code (IaC), Zero Trus
 
 <Image alt="GitHub Repository Visualizer Diagram" caption="System Architecture & Project Workflow Layout" src="image_agent_tag_17632918936798630694"/>
 
-### 🔍 [cloud-guardrail-engine](https://github.com/your-username/cloud-guardrail-engine)
+### 🔍 [cloud-guardrail-engine](https://github.com/as70023333/awesome-security-engineer/cloud-guardrail-engine)
 > **Multi-Cloud Policy Evaluation & Automated Remediation Core**
 * **Overview:** Scan Terraform configurations and live AWS/Azure APIs against CIS v2.0 Benchmarks using OPA/Rego policies.
 * **Key Features:** Automated SARIF reporting, custom guardrail enforcement, and instantaneous CLI containment playbooks.
@@ -27,7 +27,7 @@ Focusing on Cloud Security Architecture, Infrastructure-as-Code (IaC), Zero Trus
 
 ---
 
-### 🔒 [zero-trust-quarantine](https://github.com/your-username/zero-trust-quarantine)
+### 🔒 [zero-trust-quarantine](https://github.com/as70023333/awesome-security-engineer/zero-trust-quarantine)
 > **Event-Driven Identity Session Isolation Daemon**
 * **Overview:** Ingest real-time authentication events to detect anomalous IAM behavior and automate immediate session revocation across AWS STS and Azure Entra ID.
 * **Key Features:** Webhook ingestion layer, short-lived token invalidation, and automated Slack/SIEM alert routing.
@@ -35,7 +35,7 @@ Focusing on Cloud Security Architecture, Infrastructure-as-Code (IaC), Zero Trus
 
 ---
 
-### 🧪 [ephemeral-cloud-sandbox](https://github.com/your-username/ephemeral-cloud-sandbox)
+### 🧪 [ephemeral-cloud-sandbox](https://github.com/as70023333/awesome-security-engineer/ephemeral-cloud-sandbox)
 > **Automated Self-Destructing Cloud Environment Provisioner**
 * **Overview:** Provision isolated dev/test sandboxes in AWS and Azure using Terraform modules with hard budget limits and auto-teardown timers.
 * **Key Features:** Drift prevention, cost management controls, and zero-trust default networking.
@@ -46,14 +46,13 @@ Focusing on Cloud Security Architecture, Infrastructure-as-Code (IaC), Zero Trus
 ## 📊 Profile Activity & Metrics
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=your-username&show_icons=true&theme=dark" alt="GitHub Stats" width="48%" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=your-username&layout=compact&theme=dark" alt="Top Languages" width="48%" />
+  <img src="https://github-readme-stats.vercel.app/api?username=as70023333&show_icons=true&theme=dark" alt="GitHub Stats" width="48%" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?as70023333e=as70023333&layout=compact&theme=dark" alt="Top Languages" width="48%" />
 </p>
 
 ---
 
 ##  📫 Connect
 
-* **LinkedIn:** [linkedin.com/in/your-profile](https://linkedin.com)
-* **Portfolio & Blog:** [yourportfolio.dev](https://yourportfolio.dev)
-* **Email:** `your.email@domain.com`
+
+
