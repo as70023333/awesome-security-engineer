@@ -4,12 +4,13 @@ A comprehensive collection of production-ready security engineering tools and fr
 
 ## 📚 Overview
 
-This repository showcases two critical security engineering projects:
+This repository showcases critical security engineering projects:
 
 1. **[Cloud Guardrail Engine](#cloud-guardrail-engine)** - OPA-based policy evaluation for Terraform plans
 2. **[Zero-Trust Quarantine Engine](#zero-trust-quarantine-engine)** - Event-driven cross-cloud identity session revocation
+3. **[Autonomous SOC Analyst](#-autonomous-soc-analyst)** - Tier-1 SOC agent that detects, contains, and reports on alerts in under 28s *(in [Security_Automation_Projects](https://github.com/as70023333/Security_Automation_Projects/tree/main/autonomous-soc-analyst))*
 
-Both projects are designed for production deployment with comprehensive testing, CI/CD pipelines, and Kubernetes orchestration.
+All projects are designed for production deployment with comprehensive testing, CI/CD pipelines, and Kubernetes orchestration.
 
 ---
 
@@ -176,6 +177,65 @@ zero-trust-quarantine/
 │  - STS        │        │  - Graph API  │
 └───────────────┘        └───────────────┘
 ```
+
+---
+
+## 🚨 Autonomous SOC Analyst
+
+**Location:** [`Security_Automation_Projects/autonomous-soc-analyst/`](https://github.com/as70023333/Security_Automation_Projects/tree/main/autonomous-soc-analyst)
+
+A Tier-1 autonomous SOC analyst that turns a Defender/SIEM alert into **containment + preliminary evidence + a human-readable report in under 28 seconds** — so the on-call engineer becomes the strategic overseer instead of the first responder. Every verdict and containment decision is rule-based and auditable; no AI model makes a containment call.
+
+### Key Features
+
+- ✅ Ingests Defender XDR (Graph + legacy MDE), Microsoft Sentinel, Splunk, and a generic SIEM schema
+- ✅ Rule-based triage: true/false positive/undetermined, critical→low severity, page vs. "in the queue" routing
+- ✅ Hash & IP enrichment across up to 8 real-time threat-intel feeds with consensus scoring
+- ✅ Containment: endpoint isolation, firewall IP block, AD/Entra account disable, file quarantine, forensics collection
+- ✅ Safety layer: fail-closed **kill switch**, capability/scope guardrails, runtime breakout + self-heal detection, tamper-evident hash-chained audit log, out-of-band admin paging
+- ✅ Human-in-the-loop approval for high-blast-radius actions; runs fully in a mock tenant with no credentials
+
+### Quick Start
+
+```bash
+cd autonomous-soc-analyst
+pip install -r requirements.txt
+
+python -m soc_agent check                 # validate policies + config
+python -m soc_agent admin seal            # seal code+policy integrity manifest
+python -m soc_agent simulate all          # run 7 attack scenarios end to end
+python -m soc_agent simulate ransomware --show-report
+```
+
+### Project Structure
+
+```
+autonomous-soc-analyst/
+├── soc_agent/
+│   ├── orchestrator.py     # 28s detect→contain→report pipeline
+│   ├── triage.py           # rule-based verdict / severity / routing
+│   ├── normalize.py        # Defender / Sentinel / Splunk / generic ingestion
+│   ├── actions.py          # response planning + guarded execution
+│   ├── intel.py            # threat-feed fan-out + consensus
+│   ├── report.py           # Markdown IR report
+│   ├── connectors/         # Defender, Entra, AD, PAN-OS/FortiGate, 8 intel feeds, mock tenant
+│   └── safety/             # killswitch · gate · monitor · egress · integrity · runtime_guard · audit
+├── ir_policy.yaml          # incident-response policy (verdicts, routing, protected assets)
+├── safety.yaml             # capability allow-list + self-protection identities
+├── tests/                  # 46 tests: pipeline, safety, API, units
+└── README.md               # full documentation
+```
+
+### Safety Controls
+
+| Control | Purpose |
+|---------|---------|
+| Kill switch (file / env / API) | Fail-closed halt checked before every action; `actions` level investigates but changes nothing, `full` stops ingestion |
+| Capability allow-list & scope | Agent may only run whitelisted action types, only against assets in the case's own evidence |
+| Self-protection | Never isolates its own hosts, blocks its own IPs, or disables its own service/admin accounts |
+| Runtime breakout guard | Blocks & reports process spawns, code/policy writes, kill-switch tampering, audit-log truncation |
+| Tamper-evident audit log | Hash-chained JSONL of every decision and action; `admin verify-audit` detects any edit |
+| Out-of-band admin channel | Safety alerts route to a separate channel from the SOC, with a local fallback |
 
 ---
 
