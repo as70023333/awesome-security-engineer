@@ -9,6 +9,7 @@ This repository showcases critical security engineering projects:
 1. **[Cloud Guardrail Engine](#cloud-guardrail-engine)** - OPA-based policy evaluation for Terraform plans
 2. **[Zero-Trust Quarantine Engine](#zero-trust-quarantine-engine)** - Event-driven cross-cloud identity session revocation
 3. **[Autonomous SOC Analyst](#-autonomous-soc-analyst)** - Tier-1 SOC agent that detects, contains, and reports on alerts in under 28s *(in [Security_Automation_Projects](https://github.com/as70023333/Security_Automation_Projects/tree/main/autonomous-soc-analyst))*
+4. **[Sentinel Multi-Agent SOC Analyst](#-sentinel-multi-agent-soc-analyst)** - Microsoft Sentinel-native multi-agent T1 analyst with a live dashboard, human approvals and one-click rollback *(in [SentinelWork](https://github.com/as70023333/SentinelWork/tree/main/Microsoft_Sentinel/Agents/Autonomous_SOC_Analyst))*
 
 All projects are designed for production deployment with comprehensive testing, CI/CD pipelines, and Kubernetes orchestration.
 
@@ -236,6 +237,54 @@ autonomous-soc-analyst/
 | Runtime breakout guard | Blocks & reports process spawns, code/policy writes, kill-switch tampering, audit-log truncation |
 | Tamper-evident audit log | Hash-chained JSONL of every decision and action; `admin verify-audit` detects any edit |
 | Out-of-band admin channel | Safety alerts route to a separate channel from the SOC, with a local fallback |
+
+---
+
+## 🧠 Sentinel Multi-Agent SOC Analyst
+
+**Location:** [`SentinelWork/Microsoft_Sentinel/Agents/Autonomous_SOC_Analyst/`](https://github.com/as70023333/SentinelWork/tree/main/Microsoft_Sentinel/Agents/Autonomous_SOC_Analyst)
+
+A Microsoft Sentinel-native build of the autonomous Tier-1 analyst, structured as **10 cooperating agents** (orchestrator, threat intel, malware analysis, user activity, endpoint & network, endpoint / network / identity containment, IR report, policy & guardrail). When a Sentinel incident fires, it investigates in parallel, contains within the IR policy, decides **page vs. queue**, and delivers the report to Teams and back into the Sentinel incident, typically in 3-4 seconds against a 28-second budget.
+
+### Key Features
+
+- ✅ Live Microsoft connectors over REST: Sentinel incidents API, Defender for Endpoint, Defender XDR advanced hunting, Log Analytics KQL, Microsoft Graph (Entra ID), on-prem AD via Azure Automation
+- ✅ 7 threat-intel feeds in parallel: Sentinel TI (Defender TI), VirusTotal, AbuseIPDB, AlienVault OTX, GreyNoise, MalwareBazaar, URLhaus
+- ✅ Discovers C2 infrastructure not in the alert (beaconing, sandbox results) and blocks it
+- ✅ IR policy as YAML: autonomy mode per action, protected hosts, tier-0 accounts, rate limits, kill switch, escalation rules
+- ✅ Web dashboard: on-call feed, approve / reject / override / **one-click rollback**, agent Gantt timeline
+- ✅ Deterministic verdicts; Claude optionally writes the report narrative but never decides an action
+- ✅ Demo mode with 5 scenarios (ransomware, phishing takeover, DC credential dump, false positive, brute force); 59 tests incl. live wiring against a fake Microsoft cloud
+
+### Quick Start
+
+```bash
+git clone https://github.com/as70023333/SentinelWork.git
+cd SentinelWork/Microsoft_Sentinel/Agents/Autonomous_SOC_Analyst
+pip install -r requirements.txt
+cp .env.example .env
+
+python -m soc_agent demo      # all 5 scenarios in the terminal
+python -m soc_agent serve     # dashboard -> http://localhost:8080
+python -m soc_agent check     # live mode: validate every API permission
+```
+
+### Project Structure
+
+```
+Autonomous_SOC_Analyst/
+├── soc_agent/
+│   ├── orchestrator.py     # flow state, 28s budget, slow path, human decisions
+│   ├── agents/             # investigate · analysis · response · report
+│   ├── connectors/         # sentinel · defender · hunting · identity · threat_intel · sandbox · firewall · notify · llm · demo
+│   ├── policy.py           # guardrails + escalation engine
+│   ├── api.py              # webhook, approvals, rollback
+│   └── web/dashboard.html  # SOC dashboard
+├── config/ir_policy.yaml   # the IR policy
+├── deploy/runbooks/        # AD disable/enable runbook (Hybrid Worker)
+├── tests/                  # 59 tests
+└── README.md               # demo talk track + step-by-step go-live guide
+```
 
 ---
 
