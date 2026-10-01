@@ -149,25 +149,25 @@ zero-trust-quarantine/
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    External Threat Sources                   │
-│  (SIEM, GuardDuty, Entra ID Risk, Custom Alerts)           │
+│                    External Threat Sources                  │
+│  (SIEM, GuardDuty, Entra ID Risk, Custom Alerts)            │
 └────────────────────┬────────────────────────────────────────┘
                      │ Webhook (HTTPS)
                      ▼
 ┌─────────────────────────────────────────────────────────────┐
-│              Zero-Trust Quarantine Engine                    │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │  FastAPI Webhook Ingestion (main.py)                 │  │
-│  │  - Authentication (X-API-Token)                      │  │
-│  │  - Request Validation (Pydantic)                     │  │
-│  └──────────────────────────────────────────────────────┘  │
+│              Zero-Trust Quarantine Engine                   │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │  FastAPI Webhook Ingestion (main.py)                 │   │
+│  │  - Authentication (X-API-Token)                      │   │
+│  │  - Request Validation (Pydantic)                     │   │
+│  └──────────────────────────────────────────────────────┘   │
 │                         │                                   │
 │                         ▼                                   │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │  Provider Orchestration                              │  │
-│  │  - AWS Quarantine Provider (STS token revocation)    │  │
-│  │  - Azure Quarantine Provider (Entra ID revocation)   │  │
-│  └──────────────────────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │  Provider Orchestration                              │   │
+│  │  - AWS Quarantine Provider (STS token revocation)    │   │
+│  │  - Azure Quarantine Provider (Entra ID revocation)   │   │
+│  └──────────────────────────────────────────────────────┘   │
 └────────────────────┬────────────────────────────────────────┘
                      │
         ┌────────────┴────────────┐
