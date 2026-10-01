@@ -1,4 +1,4 @@
-# 🛡️ Senior Cloud & Security Engineer
+# 🛡️ Senior Security Engineer --> Security Architect in the Making
 
 A comprehensive collection of production-ready security engineering tools and frameworks for multi-cloud environments. This repository contains enterprise-grade implementations for cloud security guardrails and zero-trust identity quarantine systems.
 
