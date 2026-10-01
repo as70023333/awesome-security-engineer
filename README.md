@@ -4,7 +4,7 @@ A comprehensive collection of production-ready security engineering tools and fr
 
 ## 📚 Overview
 
-This repository showcases critical security engineering projects:
+This repository showcases my most recent security engineering projects:
 
 1. **[Cloud Guardrail Engine](#cloud-guardrail-engine)** - OPA-based policy evaluation for Terraform plans
 2. **[Zero-Trust Quarantine Engine](#zero-trust-quarantine-engine)** - Event-driven cross-cloud identity session revocation
