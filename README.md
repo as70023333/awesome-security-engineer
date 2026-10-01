@@ -633,6 +633,30 @@ For issues, questions, or contributions:
 - [ ] Multi-tenant support
 - [ ] Advanced analytics and reporting
 
+### Sentinel Multi-Agent SOC Analyst
+
+**Phase 1 - Tier-1 core (done):** orchestrator, threat intel enrichment, malware analysis, user activity, endpoint & network traffic, endpoint / network / identity containment, IR report, policy & guardrail
+
+**Phase 2 - Containment depth**
+
+- [ ] Selective isolation and stop-and-quarantine file (Defender for Endpoint)
+- [ ] Direct firewall connectors (Palo Alto, Fortinet, Check Point, Azure Firewall IP groups)
+- [ ] Forced password reset + MFA re-registration as a guarded action
+- [ ] Collect investigation package and Defender deep-analysis / Joe Sandbox / Any.Run detonation
+
+**Phase 3 - Tier-2 advanced agents**
+
+- [ ] **Phishing Triage** - analyze reported emails, find every recipient, purge from all mailboxes
+- [ ] **False Positive Learning** - learn from analyst overrides and propose analytics-rule tuning
+- [ ] **Threat Hunting** - turn new threat intel or CVEs into scheduled hunting KQL
+- [ ] **Detection Engineering** - propose new analytics rules and close MITRE ATT&CK coverage gaps
+- [ ] **Incident Correlation** - merge related alerts across users, hosts and IOCs into one incident
+- [ ] **Vulnerability Context** - raise or lower severity based on exploitable CVEs (Defender Vulnerability Management)
+- [ ] **Cloud Posture** - investigate Azure, AWS and GCP alerts (role assignments, public storage)
+- [ ] **Insider Risk / Data Exfiltration** - correlate DLP, large downloads, USB use and forwarding rules
+- [ ] **Shift Handoff** - morning summary of the night and what still waits for a human
+- [ ] **Playbook Validation** - Atomic Red Team simulations proving the pipeline detects and contains
+
 ---
 
 ## 📈 Stats
