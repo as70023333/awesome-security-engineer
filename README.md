@@ -1,4 +1,4 @@
-# 🛡️ Senior Security Engineer --> Security Architect
+# 🛡️ Senior Security Engineer | Security Architect
 
 A comprehensive collection of production-ready security engineering tools and frameworks for multi-cloud environments. This repository contains enterprise-grade implementations for cloud security guardrails and zero-trust identity quarantine systems.
 
