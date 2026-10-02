@@ -10,6 +10,7 @@ This repository showcases my most recent security engineering projects:
 2. **[Zero-Trust Quarantine Engine](#zero-trust-quarantine-engine)** - Event-driven cross-cloud identity session revocation
 3. **[Autonomous SOC Analyst](#-autonomous-soc-analyst)** - Tier-1 SOC agent that detects, contains, and reports on alerts in under 28s *(in [Security_Automation_Projects](https://github.com/as70023333/Security_Automation_Projects/tree/main/autonomous-soc-analyst))*
 4. **[Sentinel Multi-Agent SOC Analyst](#-sentinel-multi-agent-soc-analyst)** - Microsoft Sentinel-native multi-agent T1 analyst with a live dashboard, human approvals and one-click rollback *(in [SentinelWork](https://github.com/as70023333/SentinelWork/tree/main/Microsoft_Sentinel/Agents/Autonomous_SOC_Analyst))*
+5. **[SOC Toolkit](#-soc-toolkit)** - Five small, read-only SOC tools: a KQL hunting library, Entra ID hygiene audit, bulk IOC enrichment, Defender device-health report and a secrets pre-commit hook *(in [soc-toolkit](https://github.com/as70023333/soc-toolkit))*
 
 All projects are designed for production deployment with comprehensive testing, CI/CD pipelines, and Kubernetes orchestration.
 
@@ -284,6 +285,55 @@ Autonomous_SOC_Analyst/
 ├── deploy/runbooks/        # AD disable/enable runbook (Hybrid Worker)
 ├── tests/                  # 59 tests
 └── README.md               # demo talk track + step-by-step go-live guide
+```
+
+---
+
+## 🧰 SOC Toolkit
+
+**Location:** [`soc-toolkit`](https://github.com/as70023333/soc-toolkit)
+
+Five small, sharp tools that do the groundwork the autonomous SOC analysts above depend on: good hunts to investigate, threat-intel verdicts, clean identities, endpoints that can actually be isolated, and no secrets in git. Every tool is **read-only**, has **no third-party dependencies**, and runs offline with `--demo`.
+
+### Key Features
+
+- ✅ **KQL hunting library** - 38 Sentinel and Defender XDR queries across 12 MITRE ATT&CK tactics, each with false-positive, tuning and response notes, linted in CI
+- ✅ **entra-audit** - stale accounts, users without MFA (or only phishable MFA), risky app consents, permanent privileged role assignments
+- ✅ **ioc-enrich** - extracts IPs, domains, URLs and hashes from any text (defanged is fine) and checks them against 9 threat-intel sources in parallel, with caching and rate limiting
+- ✅ **mde-health** - Defender for Endpoint coverage: offboarded or silent devices, never-onboarded devices, antivirus off or outdated, network protection off
+- ✅ **secrets-scan** - pre-commit hook and CI scanner with 30 built-in rules plus custom rules for your organization's own key formats; baseline and SARIF output
+- ✅ Fails partially, never silently: a missing permission or license skips one section and the report says what to grant
+- ✅ 92 tests against a fake Microsoft cloud and fake threat-intel feeds, on Python 3.11 to 3.13
+
+### Quick Start
+
+```bash
+git clone https://github.com/as70023333/soc-toolkit.git
+cd soc-toolkit
+pip install .
+
+entra-audit --demo                                # fictional tenant
+mde-health --demo                                 # fictional device fleet
+ioc-enrich --demo examples/incident-notes.txt     # fictional threat intel
+kql-catalog lint                                  # checks all 38 queries
+secrets-scan --all                                # scans the repository
+```
+
+### Project Structure
+
+```
+soc-toolkit/
+├── kql/                    # hunting queries, one folder per ATT&CK tactic + catalog
+├── soc_toolkit/
+│   ├── common/             # HTTP retries, Entra auth, Graph / Defender / Log Analytics clients
+│   ├── entra_audit/        # collect (Graph) -> analyze (rules) -> report
+│   ├── mde_health/         # device-health rules + Defender API collection
+│   ├── ioc_enrich/         # extraction, 9 feed connectors, verdict engine, cache
+│   ├── secrets_scan/       # rules, scanner, git hook
+│   └── kql_catalog/        # KQL linter and catalog generator
+├── docs/                   # one guide per tool + Azure setup (least-privilege permissions)
+├── tests/                  # 92 tests
+└── README.md               # who, what, when, where, why and how
 ```
 
 ---
